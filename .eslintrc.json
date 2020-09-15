@@ -1,12 +1,12 @@
 {
   "rules": {
-    "react/prop-types": 0
+    "react/prop-types": 0 // to prevent prop type validation
   },
   "env": {
     "es6": true,
     "browser": true,
     "jest": true,
-    "node": true
+    "node": true // in order to allow global to work for express ie. path and fs
   },
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -23,10 +23,7 @@
   "plugins": ["react"],
   "settings": {
     "react": {
-      "version": "detect" // React version. "detect" automatically picks the version you have installed.
-      // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
-      // default to latest and warns if missing
-      // It will default to "detect" in the future
+      "version": "detect"
     }
   }
 }

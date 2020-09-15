@@ -16,9 +16,11 @@ const App = () => {
 
   return (
     <Container>
+      {/* Header Form for new tasks */}
       <Grid container justify="center">
         <TaskForm setNewItem={setNewItem} />
       </Grid>
+      {/* Body with the list of tasks */}
       <Grid container justify="center">
         <Grid item xs={12}>
           <TaskList setNewItem={setNewItem} />

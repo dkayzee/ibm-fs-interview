@@ -1,25 +1,40 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { mount } from "enzyme";
 import Task from "./Task";
 
-//new task form initial render
-test("Task should render", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(
-    <Task
-      name="Homework"
-      desc="College Assignment 101"
-      dueDate="2020-09-15"
-      id={0}
-      completed={true}
-    />,
-    div
-  );
-  ReactDOM.unmountComponentAtNode(div);
+describe("Task", () => {
+  //new task form initial render
+  it("renders without crashing", () => {
+    mount(
+      <Task
+        name="Homework"
+        desc="College Assignment 101"
+        dueDate="2020-09-15"
+        id={0}
+        completed={true}
+      />
+    );
+  });
+
+  // //new task submission creates a new div
+  // it("matches snapshot", () => {
+  //   const component = renderer
+  //     .create(
+  //       <Task
+  //         name="Homework"
+  //         desc="College Assignment 101"
+  //         dueDate="2020-09-15"
+  //         id={0}
+  //         completed={true}
+  //       />
+  //     )
+  //     .toJSON();
+  //   expect(component).toMatchSnapshot();
+  // });
+
+  //more info
+
+  //delete task
+
+  //complete task
 });
-
-//more info
-
-//delete task
-
-//complete task

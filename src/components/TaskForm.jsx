@@ -63,7 +63,11 @@ const TaskForm = ({ setNewItem }) => {
           shrink: true,
         }}
       />
-      <Button variant="contained" onClick={(e) => handleSubmit(e)}>
+      <Button
+        variant="contained"
+        onClick={(e) => handleSubmit(e)}
+        id="newTaskButton"
+      >
         Submit
       </Button>
     </form>
