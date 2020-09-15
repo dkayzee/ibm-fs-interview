@@ -19,12 +19,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { removeTask, completeTask } from "../services/processTask";
 
 const useStyles = makeStyles({
-  root: {
-    backgroundColor: (props) => {
-      const diff = Date.parse(props.dueDate) / 3600000 - Date.now() / 3600000;
-      if (diff <= 23 && diff >= -23 && !props.completed) return "orange";
-      else if (diff <= -23 && !props.completed) return "red";
-    },
+  root: (props) => {
+    const diff = Date.parse(props.dueDate) / 3600000 - Date.now() / 3600000;
+    if (diff <= 23 && diff >= -23 && !props.complete)
+      return { backgroundColor: "orange" };
+    else if (diff <= -23 && !props.complete) return { backgroundColor: "red" };
   },
 });
 
@@ -42,7 +41,8 @@ const DescriptionDialog = ({ name, desc, dueDate, open, handleClose }) => {
 
 const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
   const [open, setOpen] = useState(false);
-  const classes = useStyles({ dueDate, completed });
+  const [complete, setComplete] = useState(completed);
+  const classes = useStyles({ dueDate, complete });
 
   const handleInfoOpen = () => {
     setOpen(true);
@@ -82,6 +82,7 @@ const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
                 size="small"
                 onClick={() => {
                   completeTask(id);
+                  setComplete(true);
                   setNewItem(true);
                 }}
               >
