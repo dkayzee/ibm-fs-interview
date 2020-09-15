@@ -1,21 +1,12 @@
 import React, { useState } from "react";
-import {
-  ListItem,
-  Typography,
-  Dialog,
-  Button,
-  Grid,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Divider,
-} from "@material-ui/core";
+import { ListItem, Typography, Button, Grid, Divider } from "@material-ui/core";
 import {
   Info as InfoIcon,
   Done as DoneIcon,
   Delete as DeleteIcon,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import DescriptionDialog from "./DescriptionDialog";
 import { removeTask, completeTask } from "../services/processTask";
 
 const useStyles = makeStyles({
@@ -26,18 +17,6 @@ const useStyles = makeStyles({
     else if (diff <= -23 && !props.complete) return { backgroundColor: "red" };
   },
 });
-
-const DescriptionDialog = ({ name, desc, dueDate, open, handleClose }) => {
-  return (
-    <Dialog fullWidth open={open} onClose={handleClose} maxWidth="sm">
-      <DialogTitle>{name}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>{desc}</DialogContentText>
-        <DialogContentText>Due Date: {dueDate}</DialogContentText>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
   const [open, setOpen] = useState(false);
@@ -56,7 +35,8 @@ const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
     <React.Fragment>
       <ListItem className={classes.root}>
         <Grid container justify="space-between">
-          <Grid item xs={9}>
+          <Grid item xs={9} className="taskNameContainer">
+            {/* depending on the completion, typography has a strikethrough */}
             {completed ? (
               <Typography>
                 <del>{name}</del>
@@ -74,7 +54,12 @@ const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
           </Grid>
           <Grid item xs={3}>
             <Grid container justify="center">
-              <Button variant="contained" size="small" onClick={handleInfoOpen}>
+              <Button
+                variant="contained"
+                size="small"
+                className="btn-desc-dialog"
+                onClick={handleInfoOpen}
+              >
                 <InfoIcon />
               </Button>
               <Button

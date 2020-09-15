@@ -18,13 +18,16 @@ const useStyles = makeStyles((theme) => ({
 
 const TaskForm = ({ setNewItem }) => {
   const classes = useStyles();
+  // initial state values for the form
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // service function that will add new tasks
     addTask({ name, desc, dueDate, id: storeLength(), completed: false });
+    // drilled down function from App.js to re-render the TaskList
     setNewItem(true);
   };
 
