@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { ListItem, Typography, Dialog, Button } from "@material-ui/core";
+import { ListItem, Typography, Dialog, Button, Grid } from "@material-ui/core";
 import {
   Info as InfoIcon,
   Done as DoneIcon,
   Delete as DeleteIcon,
 } from "@material-ui/icons";
+import { removeTask, completeTask } from "../services/processTask";
 
 const DescriptionDialog = ({ desc, open, handleClose }) => {
   return (
@@ -14,31 +15,69 @@ const DescriptionDialog = ({ desc, open, handleClose }) => {
   );
 };
 
-const Task = ({ name, desc, dueDate }) => {
+const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleInfoOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleInfoClose = () => {
     setOpen(false);
   };
 
   return (
     <ListItem>
-      <Typography>{name}</Typography>
-      <Typography>{dueDate}</Typography>
-      <Button variant="contained" size="small">
-        <InfoIcon onClick={handleClickOpen} />
-      </Button>
-      <Button variant="contained" size="small">
-        <DoneIcon />
-      </Button>
-      <Button variant="contained" size="small">
-        <DeleteIcon />
-      </Button>
-      <DescriptionDialog desc={desc} open={open} handleClose={handleClose} />
+      <Grid container justify="space-between">
+        <Grid item xs={9}>
+          {completed ? (
+            <Typography>
+              <del>{name}</del>
+            </Typography>
+          ) : (
+            <Typography>{name}</Typography>
+          )}
+          {completed ? (
+            <Typography>
+              <del>{dueDate}</del>
+            </Typography>
+          ) : (
+            <Typography>{dueDate}</Typography>
+          )}
+        </Grid>
+        <Grid item xs={3}>
+          <Grid container justify="center">
+            <Button variant="contained" size="small">
+              <InfoIcon onClick={handleInfoOpen} />
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => {
+                completeTask(id);
+                setNewItem(true);
+              }}
+            >
+              <DoneIcon />
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => {
+                removeTask(id);
+                setNewItem(true);
+              }}
+            >
+              <DeleteIcon />
+            </Button>
+          </Grid>
+        </Grid>
+        <DescriptionDialog
+          desc={desc}
+          open={open}
+          handleClose={handleInfoClose}
+        />
+      </Grid>
     </ListItem>
   );
 };

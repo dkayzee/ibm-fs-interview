@@ -1,6 +1,6 @@
 // const mockStore = require("./mockDataStore.js");
 import mockStore from "../../mockDataStore.js";
-import processTask from "./processTask.js";
+import { addTask } from "./processTask.js";
 
 test("process task succesfully", () => {
   const task = {
@@ -8,6 +8,6 @@ test("process task succesfully", () => {
     description: "Tomorrow is trash pick-up date!",
     dueDate: "2020-09-15",
   };
-  processTask(task);
+  addTask(task);
   expect(mockStore.length).toBe(3);
 });

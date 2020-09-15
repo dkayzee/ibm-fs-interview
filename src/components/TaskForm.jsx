@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core";
+import { addTask, storeLength } from "../services/processTask";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,14 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TaskForm = () => {
+const TaskForm = ({ setNewItem }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [dueDate, setDueDate] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ name, desc, dueDate });
+    addTask({ name, desc, dueDate, id: storeLength() });
+    setNewItem(true);
   };
 
   return (
