@@ -24,7 +24,7 @@ const TaskForm = ({ setNewItem }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask({ name, desc, dueDate, id: storeLength() });
+    addTask({ name, desc, dueDate, id: storeLength(), completed: false });
     setNewItem(true);
   };
 

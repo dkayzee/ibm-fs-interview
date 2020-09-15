@@ -14,8 +14,7 @@
   "lint-staged": {
     "*.{js, jsx}": [
       "eslint --fix",
-      "jest --bail --findRelatedTests",
-      "git add"
+      "jest --bail --findRelatedTests"
     ]
   },
   "husky": {
