@@ -12,7 +12,7 @@
     "test": "jest -b"
   },
   "lint-staged": {
-    "*.{js, jsx}": [
+    "**/*.js?(x)": [
       "eslint --fix",
       "jest --bail --findRelatedTests"
     ]
