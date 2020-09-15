@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   List,
   MenuItem,
@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
-  // selectEmpty: {
-  //   marginTop: theme.spacing(2),
-  // },
 }));
 
 const TaskList = ({ setNewItem }) => {
@@ -29,6 +26,7 @@ const TaskList = ({ setNewItem }) => {
     <React.Fragment>
       <Grid container justify="center">
         <Grid item xs={3}>
+          {/* State controlled form for filtering task accordingly */}
           <FormControl className={classes.formControl} fullWidth>
             <InputLabel>Filter By:</InputLabel>
             <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -41,10 +39,9 @@ const TaskList = ({ setNewItem }) => {
         </Grid>
       </Grid>
 
-      {/* Toggle that will ask to display completed items or not */}
       <List>
         {filter === "none"
-          ? mockStore.map((each, index) => (
+          ? mockStore.map((each) => (
               <Task
                 name={each.name}
                 desc={each.desc}
@@ -58,7 +55,7 @@ const TaskList = ({ setNewItem }) => {
           : filter === "completed"
           ? mockStore
               .filter((each) => each.completed)
-              .map((each, index) => (
+              .map((each) => (
                 <Task
                   name={each.name}
                   desc={each.desc}
@@ -77,7 +74,7 @@ const TaskList = ({ setNewItem }) => {
                   Date.parse(each.dueDate) / 3600000 - Date.now() / 3600000;
                 if (diff <= 23 && diff >= -23) return each;
               })
-              .map((each, index) => (
+              .map((each) => (
                 <Task
                   name={each.name}
                   desc={each.desc}
@@ -88,14 +85,15 @@ const TaskList = ({ setNewItem }) => {
                   setNewItem={setNewItem}
                 />
               ))
-          : mockStore
+          : // last ternary is for overdue
+            mockStore
               .filter((each) => {
                 // 3600000 milliseconds in a hour
                 const diff =
                   Date.parse(each.dueDate) / 3600000 - Date.now() / 3600000;
-                if (diff <= -23) return each;
+                if (diff <= -23 && !each.completed) return each;
               })
-              .map((each, index) => (
+              .map((each) => (
                 <Task
                   name={each.name}
                   desc={each.desc}

@@ -15,7 +15,18 @@ import {
   Done as DoneIcon,
   Delete as DeleteIcon,
 } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
 import { removeTask, completeTask } from "../services/processTask";
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: (props) => {
+      const diff = Date.parse(props.dueDate) / 3600000 - Date.now() / 3600000;
+      if (diff <= 23 && diff >= -23 && !props.completed) return "orange";
+      else if (diff <= -23 && !props.completed) return "red";
+    },
+  },
+});
 
 const DescriptionDialog = ({ name, desc, dueDate, open, handleClose }) => {
   return (
@@ -31,6 +42,7 @@ const DescriptionDialog = ({ name, desc, dueDate, open, handleClose }) => {
 
 const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
   const [open, setOpen] = useState(false);
+  const classes = useStyles({ dueDate, completed });
 
   const handleInfoOpen = () => {
     setOpen(true);
@@ -42,7 +54,7 @@ const Task = ({ name, desc, dueDate, id, setNewItem, completed }) => {
 
   return (
     <React.Fragment>
-      <ListItem>
+      <ListItem className={classes.root}>
         <Grid container justify="space-between">
           <Grid item xs={9}>
             {completed ? (
