@@ -11,6 +11,7 @@ test("Task should render", () => {
       desc="College Assignment 101"
       dueDate="2020-09-15"
       id={0}
+      completed={true}
     />,
     div
   );
